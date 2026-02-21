@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-practice-app
+  labels:
+    app: devops-practice-app
+    component: frontend
+spec:
+  type: NodePort
+  selector:
+    app: devops-practice-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      nodePort: 30080
