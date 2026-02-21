@@ -3,21 +3,25 @@ pipeline {
 
     stages {
 
-        stage("Stop Old App") {
-            steps {
-                sh "pkill -f 'vite' || true"
-            }
-        }
-
         stage("Install Dependencies") {
             steps {
                 sh 'npm install'
             }
         }
 
-        stage("Start Application") {
+        stage("Build Application") {
             steps {
-                sh 'nohup npm run dev -- --host 0.0.0.0 > app.log 2>&1 &'
+                sh 'npm run build'
+            }
+        }
+
+        stage("Serve Application") {
+            steps {
+                sh '''
+                pkill -f "nginx" || true
+                sudo cp -r dist/* /usr/share/nginx/html/
+                sudo systemctl restart nginx
+                '''
             }
         }
     }
