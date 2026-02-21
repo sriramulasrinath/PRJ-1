@@ -5,7 +5,7 @@ pipeline {
 
         stage("Stop Old App") {
             steps {
-                sh "pkill -f 'node' || true"
+                sh "pkill -f 'vite' || true"
             }
         }
 
